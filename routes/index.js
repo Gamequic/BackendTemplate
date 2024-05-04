@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 
-const Password = require('./password.routes');
 const Auth = require('./auth.routes');
 const User = require('./user.routes');
 

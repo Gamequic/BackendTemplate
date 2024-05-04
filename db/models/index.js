@@ -1,4 +1,3 @@
-const { PasswordSchema, Password } = require('./password.model');
 const { UserSchema, User } = require('./user.model');
 
 function setupModels(sequelize) {
