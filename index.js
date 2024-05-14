@@ -10,10 +10,10 @@ const path = require('path');
 const routerApi = require('./routes');
 
 const {
-    logErrors,
-    errorHandler,
-    boomErrorHandler,
-    ormErrorHandler,
+  logErrors,
+  errorHandler,
+  boomErrorHandler,
+  ormErrorHandler,
 } = require('./middlewares/error.handler');
 
 // const optionsHTTPS = {
@@ -26,17 +26,17 @@ const port = config.port || 3000;
 
 app.use(express.json());
 app.use(
-    fileUpload({
-        limits: { fileSize: 50 * 1024 * 1024 },
-    }),
+  fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 },
+  }),
 );
 
 const corsOptions = {
-    origin: ['http://192.168.1.78/', 'http://192.168.1.78/'],
+  origin: ['http://192.168.1.78/', 'http://192.168.1.78/'],
 };
 
 app.get('/', (req, res) => {
-    res.send('Online');
+  res.send('Online');
 });
 
 routerApi(app, corsOptions);
@@ -49,5 +49,5 @@ app.use(errorHandler);
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.listen(port, () => {
-    console.log(`Mi port ${port}`);
+  console.log(`Mi port ${port}`);
 });
