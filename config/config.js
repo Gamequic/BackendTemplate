@@ -1,8 +1,8 @@
 require('dotenv').config();
 
 const config = {
-    env: process.env.NODE_ENV || 'dev',
-    isProd: process.env.NODE_ENV === 'production',
+    isProd: JSON.parse(process.env.NODE_PROC) || false,
+    debugging: JSON.parse(process.env.DEBUGGING) || false,
     port: process.env.PORT || 3000,
     dbUrl: process.env.DATABASE_URL,
     saltRounds: process.env.SALTROUNDS, 
