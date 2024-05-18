@@ -16,6 +16,7 @@ All of you are free to take this code by forking this repo, and change whatever 
 ## Checklist
 
 * [ ] Fix proc and dev mode
+* [x] Block endpoits with rootMiddleware
 * [ ] Create a public path to leave the HTML use on nodemailer
 * [ ] Create path docs
 * [ ] Create docker file

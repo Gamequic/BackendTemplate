@@ -3,6 +3,8 @@ require('dotenv').config();
 const config = {
     isProd: JSON.parse(process.env.NODE_PROC) || false,
     debugging: JSON.parse(process.env.DEBUGGING) || false,
+    userRoot: process.env.ROOTUSER || 'root',
+    passwordRoot: process.env.ROOTPASSWORD || 'root',
     port: process.env.PORT || 3000,
     dbUrl: process.env.DATABASE_URL,
     saltRounds: process.env.SALTROUNDS, 
