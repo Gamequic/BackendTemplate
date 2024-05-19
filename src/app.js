@@ -1,8 +1,11 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
+const morgan = require('morgan');
 const path = require('path');
 
 const routerApi = require('./features/loader');
+
+const logger = require('./../src/features/logger/logger');
 
 const {
   logErrors,
@@ -25,11 +28,17 @@ app.use(
   }),
 );
 
+app.use(morgan('combined', {
+  stream: {
+      write: (message) => logger.info(message.trim())
+  }
+}));
+
 const corsOptions = {
   origin: ['http://192.168.1.78/', 'http://192.168.1.78/'],
 };
 
-app.get('/', (req, res) => {
+app.get('/CheckHealth', (req, res) => {
   res.send('Online');
 });
 
