@@ -22,7 +22,8 @@ All of you are free to take this code by forking this repo, and change whatever 
 
 ## Checklist
 
-* [ ] Fix proc and dev mode
+* [ ] Add server for static files
+* [X] Fix proc and dev mode
 * [X] Block endpoits with rootMiddleware
 * [ ] Create a public path to leave the HTML use on nodemailer
 * [X] Create path docs
@@ -31,18 +32,29 @@ All of you are free to take this code by forking this repo, and change whatever 
   This code is taken for older proyects, right now it is been cleaned for old code for other proyects.
 * [ ] Logs
 
-## Paths
+## Project Structure
+This project is organized based on specific functionalities to facilitate code management and maintenance. Below is the basic structure of the project:
+
 
 ```
-/config - Import all env variables
-/db - configure the models for SQL database
-/libs - Make conection with data base
-/middleware - Middlewares or the code that run after of before than an request
-/public - safe photos for profiles
-  |/html - HTML for recovery emails
-/routes - Endpoints
-/schemas - Schemas for comprobation for data on endpoints
-/services - The code that talk with the database
+/project-root
+  /src
+    /features
+      /user-management
+        /controllers
+        /models
+        /routes
+        /services
+      /product-catalog
+        /controllers
+        /models
+        /routes
+        /services
+  /config
+  /tests
+  /public
+  /scripts
+  /docs
 ```
 
 ## Made with
