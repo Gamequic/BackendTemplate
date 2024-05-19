@@ -1,11 +1,10 @@
 const express = require('express');
-// const path = require("path");
-// const boom = require('boom')
 
 const validationHandler = require('../../../middlewares/validator.handler');
 const { login, askPasswordReset, applyPasswordReset } = require('./auth.schema');
+const { getUserSchema } = require('./../user/user.schema');
+const { authentication, authenticationToSelf } = require('./../../../middlewares/auth.handler');
 const AuthService = require('./auth.service');
-// const { authentication, authenticationToSelf, rootAuth} = require('../middlewares/auth.handler')
 
 const router = express.Router();
 const service = new AuthService();
@@ -48,75 +47,20 @@ router.post("/resetpassword",
   }
 );
 
-// router.get('/',
-//   authentication,
-//   async (req, res, next) => {
-//     try {
-//       res.json(await service.find());
-//     } catch (error) {
-//       next(error);
-//     }
-// });
-
-// router.get('/:id',
-//   validationHandler(getUserSchema, 'params'),
-//   authentication,
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       user = await service.findOne(id)
-//       delete user.dataValues.password
-//       res.json(user);
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
-
-// router.patch('/:id',
-//   validationHandler(getUserSchema, 'params'),
-//   validationHandler(updateUserSchema, 'body'),
-//   authentication,
-//   authenticationToSelf,
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       const body = req.body;
-//       res.status(201).json(await service.update(id, body));
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
-
-// router.delete('/:id',
-//   validationHandler(getUserSchema, 'params'),
-//   authentication,
-//   authenticationToSelf,
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       res.status(200).json(await service.delete(id));
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
-
-// router.post("/upload-profilephoto/:id",
-//   validationHandler(getUserSchema, 'params'),
-//   authentication,
-//   authenticationToSelf,
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       const profilePhoto = req.files.profilePhoto
-//       const user = await service.uploadPhoto(profilePhoto, id);
-//       res.status(201).json(user);
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
+router.post("/upload-profilephoto/:id",
+  validationHandler(getUserSchema, 'params'),
+  authentication,
+  authenticationToSelf,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const profilePhoto = req.files.profilePhoto
+      const user = await service.uploadPhoto(profilePhoto, id);
+      res.status(201).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = router;

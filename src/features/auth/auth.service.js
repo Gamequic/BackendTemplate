@@ -11,82 +11,32 @@ const { PasswordRecovery } = require('../../../public/html/passwordRecovery.page
 class AuthService {
     constructor() {}
 
-    // async createRandomCharacter(){
-    //   const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-    //   let result = "";
-
-    //   for (let i = 0; i < 10; i++) {
-    //     const index = Math.floor(Math.random() * characters.length);
-    //     result += characters[index];
-    //   }
-
-    //   return result
-    // }
-
-    // async create(data) {
-    //   const newUser = await models.User.create({
-    //     ...data,
-    //     password: await bcrypt.hashSync(data.password, parseInt(config.saltRounds)),
-    //     crypt: await this.createRandomCharacter()
-    //   });
-    //   delete newUser.dataValues.password
-    //   return newUser;
-    // }
-
-    // async find() {
-    //   const rta = await models.User.findAll({
-    //     attributes: { exclude: ['password'] }
-    //   });
-    //   return rta;
-    // }
-
-    async findOne(id) {
-      const user = await models.User.findByPk(id);
-      if (!user) {
-        throw boom.notFound('user not found');
-      }
-      delete user.dataValues.password
-      return user;
-    }
-
-    async update(id, changes) {
+    async uploadPhoto(photo, id){
+      // Ge user
       const user = await this.findOne(id);
-      const rta = await user.update(changes);
-      return rta;
+      delete user.dataValues.password;
+
+      // Check foto
+      if (!photo) {
+        throw boom.badRequest('No files were uploaded.')
+      }
+
+      // Move photo to public dir
+      const path = __dirname + "./../../../public/profilePhotos/" + `profilePhoto${id}`;
+      photo.mv(path, (err) => {
+        if (err) {
+          throw boom.internal(err)
+        }
+      });
+
+      // Set photo to user
+      return await this.update(id, {
+        photo: `/public/profilePhotos/profilePhoto${id}`
+      })
     }
-
-    // async delete(id) {
-    //   const user = await this.findOne(id);
-    //   await user.destroy();
-    //   return { id };
-    // }
-
-    // async uploadPhoto(photo, id){
-    //   //Conseguir usuario
-    //   const user = await this.findOne(id);
-    //   delete user.dataValues.password;
-
-    //   //Confirmar foto
-    //   if (!photo) {
-    //     throw boom.badRequest('No files were uploaded.')
-    //   }
-
-    //   //Mover la foto a la carpeta publica
-    //   const path = __dirname + "/../public/" + `profilePhoto${id}`;
-    //   photo.mv(path, (err) => {
-    //     if (err) {
-    //       throw boom.internal(err)
-    //     }
-    //   });
-
-    //   //Aplicar la foto al usuario
-    //   return await this.update(id, {
-    //     photo: `http://${config.ipAddress}/public/profilePhoto${id}`
-    //   })
-    // }
 
     async askPasswordReset(email){
-      //Does user exist?
+      // Does user exist?
       const user = await models.User.findOne({
         where: {
           email: email
@@ -97,14 +47,14 @@ class AuthService {
       }
       delete user.dataValues.password;
 
-      //Generate Token
+      // Generate Token
       const token = jwt.sign({
         id: user.dataValues.id,
         email: user.dataValues.email,
         name: user.dataValues.name
       }, config.authSecret, { expiresIn: 900 });
 
-      //Enviar email
+      // Send email
       const mail =  await EmailService.sendMail({
         from: '"Password reset" <demiancalleros1@gmail.com>',
         to: email,
@@ -118,12 +68,12 @@ class AuthService {
 
     async applyPasswordReset(token, password){
       return new Promise((resolve, reject) => {
-        //Is token valid?
+        // Is token valid?
         jwt.verify(token, config.authSecret, async (err, decoded) => {
           if (err) {
             reject(boom.unauthorized("The token is not valid"));
           } else {
-            //Update password
+            // Update password
             const user = await this.update(decoded.id, {password: bcrypt.hashSync(password, parseInt(config.saltRounds))});
             delete user.dataValues.password;
             resolve(user);
@@ -133,25 +83,25 @@ class AuthService {
     }
 
     async logIn({ email, password }) {
-        //Does user exists?
+        // Does user exists?
         var user;
         user = await models.User.findOne({
-            where: {
-                email: email,
-            },
+          where: {
+            email: email,
+          },
         });
         if (user) {
-            user.dataValues = { ...user.dataValues };
+          user.dataValues = { ...user.dataValues };
         }
         if (!user) {
-            throw boom.notFound('User not found');
+          throw boom.notFound('User not found');
         }
 
-        //Check password
+        // Check password
         const result = await bcrypt.compare(password, user.dataValues.password);
         if (!result) {
-            //Incorrect password
-            throw boom.unauthorized('Password is wrong');
+          // Incorrect password
+          throw boom.unauthorized('Password is wrong');
         }
 
         //Create token

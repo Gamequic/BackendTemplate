@@ -28,9 +28,10 @@ All of you are free to take this code by forking this repo, and change whatever 
 * [X] Create a public path to leave the HTML use on nodemailer
 * [X] Create path docs
 * [ ] Create docker file
-* [ ] Clean old code
+* [X] Clean old code
   This code is taken for older proyects, right now it is been cleaned for old code for other proyects.
 * [ ] Logs
+* [ ] DevOps
 
 ## Project Structure
 This project is organized based on specific functionalities to facilitate code management and maintenance. Below is the basic structure of the project:
