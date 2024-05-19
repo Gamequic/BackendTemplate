@@ -14,4 +14,13 @@ function authentication(req, res, next){
     }
 }
 
-module.exports = { authentication }
+function authenticationToSelf(req, res, next) {
+    const { id } = req.params;
+    const originId = req.headers.id;
+    if (!(Number(id) === Number(originId))){
+        throw boom.unauthorized("Is not allow to use other user")
+    }
+    next()
+}
+
+module.exports = { authentication, authenticationToSelf}

@@ -1,18 +1,20 @@
-import Boom from 'boom';
+/*
+    This middleware is use for block endpoints that are not desing for final use,
+    To unblock the enpoint just remove this middleware.
+*/
 
-import { config } from './../config/config';
+const Boom = require('@hapi/boom')
 
-function rootAuth() {
-    return (req, res, next) => {
-        const userRoot = req.headers.userroot;
-        const passwordRoot = req.headers.passwordroot;
-        if ((userRoot === config.userRoot) && (passwordRoot === config.passwordRoot)) {
-            next();
-        } else {
-            Boom.unauthorized('Root authentication failed.');
-        }
-    };
+const { config } = require('./../config/config');
+
+function rootAuth (req, res, next) {
+    const userRoot = req.headers.userroot;
+    const passwordRoot = req.headers.passwordroot;
+    if ((userRoot === config.userRoot) && (passwordRoot === config.passwordRoot)) {
+        next();
+    } else {
+        Boom.unauthorized('Root authentication failed.');
+    }
 }
 
-
-export default rootAuth;
+module.exports = { rootAuth };

@@ -1,7 +1,5 @@
 const boom = require('boom');
 const bcrypt = require('bcrypt');
-// const nodemailer = require("nodemailer");
-// const jwt = require('jsonwebtoken');
 
 const { models } = require('../../db/libs/sequelize');
 const { config } = require('../../../config/config');
@@ -43,14 +41,14 @@ class UserService {
         return user;
     }
 
-    async delete(id, adminId) {
-        const user = await this.findOne(id, adminId);
+    async delete(id) {
+        const user = await this.findOne(id);
         await user.destroy();
         return { id };
       }
 
-    async update(id, changes, adminId) {
-        const user = await this.findOne(id, adminId);
+    async update(id, changes) {
+        const user = await this.findOne(id);
         const result = await user.update(changes);
         return result;
       }
