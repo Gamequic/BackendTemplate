@@ -2,13 +2,13 @@ const express = require('express');
 // const path = require("path");
 // const boom = require('boom')
 
-const validationHandler = require('../middlewares/validator.handler');
+const validationHandler = require('../../../middlewares/validator.handler');
 const {
     createUserSchema,
     // updateUserSchema,
     // getUserSchema,
-} = require('../schemas/user.schema');
-const UserService = require('../services/user.service');
+} = require('./user.schema');
+const UserService = require('./user.service');
 // const { authentication, checkPermission } = require('../middlewares/auth.handler');
 
 const router = express.Router();

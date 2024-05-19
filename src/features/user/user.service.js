@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 // const nodemailer = require("nodemailer");
 // const jwt = require('jsonwebtoken');
 
-const { models } = require('../libs/sequelize');
-const { config } = require('../config/config');
+const { models } = require('../../db/libs/sequelize');
+const { config } = require('../../../config/config');
 
 class UserService {
     constructor() {}

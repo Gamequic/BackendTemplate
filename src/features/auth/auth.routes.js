@@ -2,9 +2,9 @@ const express = require('express');
 // const path = require("path");
 // const boom = require('boom')
 
-const validationHandler = require('../middlewares/validator.handler');
-const { login, askPasswordReset, applyPasswordReset } = require('../schemas/auth.schema');
-const AuthService = require('../services/auth.service');
+const validationHandler = require('../../../middlewares/validator.handler');
+const { login, askPasswordReset, applyPasswordReset } = require('./auth.schema');
+const AuthService = require('./auth.service');
 // const { authentication, authenticationToSelf, rootAuth} = require('../middlewares/auth.handler')
 
 const router = express.Router();

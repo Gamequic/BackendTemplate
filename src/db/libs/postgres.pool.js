@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
 
-const { config } = require('./../config/config');
+const { config } = require('../../../config/config');
 
 const options = {
     connectionString: config.dbUrl,

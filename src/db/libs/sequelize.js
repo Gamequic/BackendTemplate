@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
-const { config } = require('../config/config');
-const setupModels = require('./../db/models/index.js');
+const { config } = require('../../../config/config.js');
+const setupModels = require('../models/index.js');
 
 const options = {
     dialect: 'postgres',
