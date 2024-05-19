@@ -31,7 +31,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "docker compose up -d && nodemon index.js"
+    "dev": "docker compose up -d && nodemon index.js",
+    "proc": "node index.js"
   },
   "repository": {
     "type": "git",

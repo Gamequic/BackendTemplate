@@ -9,6 +9,37 @@ This backend template shut achieve with this pints
 3. Authentication
 4. Use always conventional commits
 
+
+### Starting the application without Docker:
+
+1. **Prerequisites** :
+   * Node.js installed on your system. You can download it from [nodejs.org](https://nodejs.org/).
+2. **Installing dependencies** :
+   * Open a terminal and navigate to the root directory of your Node.js application.
+   * Run the following command to install the dependencies defined in the`package.json` file:
+     `npm install`
+3. **Database setup** :
+   * Ensure you have [Docker](https://www.docker.com/get-started/) instaled on your machine
+4. **Starting the application** :
+   * Once you have installed the dependencies and set up the database, you can start the application by running the following command:
+
+     `npm run dev`
+   * This will start the app and a docker postgre database
+   * The application should start and be available at`http://localhost:3000` by default.
+
+### Starting the application with Docker:
+
+1. **Prerequisites** :
+   * Docker installed on your system. You can download and install Docker Desktop from [docker.com]().
+2. **Configuring Dockerfile** :
+   * Create a file named`Dockerfile` in the root directory of your Node.js application with the necessary instructions to build the Docker image for your application. You can use the example provided in the previous response.
+     `docker build -t my-node-app .`
+3. **Building and running containers** :
+   * Open a terminal and navigate to the root directory of your project.
+   * Run the following command to build the Docker images and create the containers defined in your`docker-compose.yml` file:
+     `docker compose up -d`
+   * Once the build is complete and the containers are running, your application will be available at`http://localhost:3000`.
+
 ## Philosophy
 
 All of you are free to take this code by forking this repo, and change whatever you want.
@@ -22,12 +53,11 @@ All of you are free to take this code by forking this repo, and change whatever 
 
 ## Checklist
 
-* [ ] Add server for static files
 * [X] Fix proc and dev mode
 * [X] Block endpoits with rootMiddleware
 * [X] Create a public path to leave the HTML use on nodemailer
 * [X] Create path docs
-* [ ] Create docker file
+* [X] Create docker file
 * [X] Clean old code
   This code is taken for older proyects, right now it is been cleaned for old code for other proyects.
 * [X] Logs
@@ -58,11 +88,9 @@ This project is organized based on specific functionalities to facilitate code m
   /docs
 ```
 
-
 ## Logging System
 
 Implementing a logging system is crucial for monitoring and debugging the application. In this project, we use `winston` for managing logs and `morgan` for logging HTTP requests.
-
 
 ### Winston
 
