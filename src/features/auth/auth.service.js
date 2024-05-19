@@ -1,10 +1,12 @@
 const boom = require('boom');
 const bcrypt = require('bcrypt');
-const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 
 const { models } = require('../../db/libs/sequelize');
 const { config } = require('../../../config/config');
+const { EmailService } = require('./../email/index');
+
+const { PasswordRecovery } = require('../../../public/html/passwordRecovery.page');
 
 class AuthService {
     constructor() {}
@@ -83,29 +85,6 @@ class AuthService {
     //   })
     // }
 
-    async sendMail(email) {
-
-      var mail = email || {
-        from: '"Development email" <demiancalleros1@gmail.com>',
-        to: "demiancalleros1@gmail.com",
-        subject: "This is a development email",
-        text: "",
-        html: "",
-      }
-
-      let transporter = nodemailer.createTransport({
-        host: config.emailService,
-        port: 465,
-        secure: true,
-        auth: {
-          user: config.email,
-          pass: config.emailpassword,
-        },
-      });
-
-      return await transporter.sendMail(mail)
-    }
-
     async askPasswordReset(email){
       //Does user exist?
       const user = await models.User.findOne({
@@ -126,12 +105,12 @@ class AuthService {
       }, config.authSecret, { expiresIn: 900 });
 
       //Enviar email
-      const mail =  await this.sendMail({
+      const mail =  await EmailService.sendMail({
         from: '"Password reset" <demiancalleros1@gmail.com>',
         to: email,
         subject: "Password reset",
         text: ``,
-        html: `<a href='http://${config.ipAddress}/confirmrecovery/?token=${token}'>Recover password<a>`,
+        html: PasswordRecovery({ ipAddres:config.ipAddress, token })
       });
 
       return "Email sent"

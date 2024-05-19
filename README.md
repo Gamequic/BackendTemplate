@@ -25,7 +25,7 @@ All of you are free to take this code by forking this repo, and change whatever 
 * [ ] Add server for static files
 * [X] Fix proc and dev mode
 * [X] Block endpoits with rootMiddleware
-* [ ] Create a public path to leave the HTML use on nodemailer
+* [X] Create a public path to leave the HTML use on nodemailer
 * [X] Create path docs
 * [ ] Create docker file
 * [ ] Clean old code
